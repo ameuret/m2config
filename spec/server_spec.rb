@@ -9,7 +9,7 @@ describe M2Config::Server do
     @db = SQLite3::Database.new DEFAULT_DB_NAME
     @db.results_as_hash = true
     @srv = M2Config::Server.new
-    @host = M2Config::Host.new({matching:"example.com"})
+    @host = M2Config::Host.new({matching:"example.com", name: "ex"})
   end
   
   after(:each) do

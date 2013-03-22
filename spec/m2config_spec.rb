@@ -1,6 +1,6 @@
 require "env"
   
-TABLES = %w(directory handler host log mimetype proxy route server setting statistic)
+TABLES = %w(directory handler host log mimetype proxy route server setting statistic filter)
 
 File.delete EXISTING_DB_NAME rescue nil
 emptyDB = SQLite3::Database.new EXISTING_DB_NAME

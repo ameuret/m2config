@@ -5,6 +5,7 @@ module M2Config
     def initialize( fields )
       raise ArgumentError, "The send and receive endpoints can not be the same" if
         fields[:send_spec] == fields[:recv_spec]
+      fields[:recv_ident] ||= ""
       super(fields, false)
       save
     end

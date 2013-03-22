@@ -48,6 +48,25 @@ exComHost.add_route pubRoute
 server.add_host exComHost
 ```
 
+Keep in mind that these lines will create their corresponding database
+records every time the script is run. For simplicity there is no check
+for duplicates. This has the benefit of complete flexibility and
+control but *you* must ensure that the DB ends up looking the way you
+want.
+
+You can swiftly dump your config using:
+
+```ruby
+require "pp"
+
+pp Server.all
+pp Host.all
+pp Handler.all
+pp Dir.all
+pp Route.all
+
+```
+
 ### This is Sequel
 
 The classes mapping the configuration are

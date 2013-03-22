@@ -17,30 +17,36 @@ describe M2Config::Host do
   
   describe "::new" do
     it "needs to know the domain name served" do
-      M2Config::Host.new({matching:"example.com"})
+      M2Config::Host.new({matching:"example.com", name: "ex"})
       res = @db.get_first_row("SELECT * FROM host;")
       res["matching"].should eq("example.com")
     end
     
     it "can use the uuid of a server" do
-      host = M2Config::Host.new({matching:"example.com", srvUuid: @srv.uuid})
+      host = M2Config::Host.new({matching:"example.com", name: "ex", srvUuid: @srv.uuid})
       res = @db.get_first_row("SELECT * FROM host WHERE id=?;", host.id)
       res["server_id"].should eq(@srv.id)
       res["matching"].should eq("example.com")
     end
   
     it "can use a server instance" do
-      host = M2Config::Host.new({matching:"example.com", srv: @srv})
+      host = M2Config::Host.new({matching:"example.com", name: "ex", srv: @srv})
       res = @db.get_first_row("SELECT * FROM host WHERE id=?;", host.id)
       res["server_id"].should eq(@srv.id)
       res["matching"].should eq("example.com")
+    end
+  
+    it "enforces mongrel2 constraint about nil name" do
+      expect {
+        M2Config::Host.new({matching:"example.com"})
+      }.to raise_exception(ArgumentError, /name can not be nil/i) 
     end
   end
   
   describe "#add_route" do
     it "activates a route (can be done using Route#host= too)" do
-      host = M2Config::Host.new({matching:"example.com"})
-      dirH = M2Config::Dir.new({base: "/static"})
+      host = M2Config::Host.new({matching:"example.com", name: "ex"})
+      dirH = M2Config::Dir.new({base: "static/"})
       dirR = M2Config::Route.new({path:"/blog", target: dirH})
       host.add_route dirR
       res = @db.get_first_row("SELECT * FROM route;")

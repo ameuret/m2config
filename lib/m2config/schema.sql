@@ -52,3 +52,7 @@ CREATE TABLE statistic (id SERIAL,
     mean REAL,
     sd REAL,
     primary key (other_type, other_id, name));
+CREATE TABLE filter (id INTEGER PRIMARY KEY,
+    server_id INTEGER,
+    name TEXT,
+    settings TEXT);

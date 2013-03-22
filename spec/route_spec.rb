@@ -6,7 +6,7 @@ describe M2Config::Route do
   before(:each) do
     File.delete DEFAULT_DB_NAME rescue nil
     @cfg = M2Config::Config.new
-    @dirH = M2Config::Dir.new({base: "/static"})
+    @dirH = M2Config::Dir.new({base: "static/"})
     @db = SQLite3::Database.new DEFAULT_DB_NAME
     @db.results_as_hash = true
   end
@@ -28,7 +28,7 @@ describe M2Config::Route do
   
   describe "#host=" do
     it "can be used if the host is not known at creation" do
-      host = M2Config::Host.new({matching:"example.com"})
+      host = M2Config::Host.new({matching:"example.com", name: "ex"})
       r = M2Config::Route.new({path:"/blog", target: @dirH})
       r.host = host.id
       res = @db.get_first_row("SELECT * FROM route;")
@@ -36,7 +36,7 @@ describe M2Config::Route do
     end
     
     it "can take a Host instance" do
-      host = M2Config::Host.new({matching:"example.com"})
+      host = M2Config::Host.new({matching:"example.com", name: "ex"})
       r = M2Config::Route.new({path:"/blog", target: @dirH})
       r.host = host
       res = @db.get_first_row("SELECT * FROM route;")
