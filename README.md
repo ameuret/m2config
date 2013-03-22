@@ -61,7 +61,9 @@ A few features that you may miss if your needs go beyond mine:
 
   - MIME types are not handled (trivial to add, just ask)
   - Multiple DBs in same process
-  - A DSL-like syntax (probably improves readability in complex setups)
+  - A DSL-like syntax (likely to improve readability in complex setups)
+  - Declare proper associations
+  - Cleanup / consolidate DB (delete unreferenced entries)
   
   
   
