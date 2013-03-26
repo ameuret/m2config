@@ -1,6 +1,6 @@
 module M2Config
   class Host < Sequel::Model(:host)
-    plugin :validation_helpers
+    one_to_many :routes
   
     def initialize( fields )
       s = resolveServer fields
@@ -10,8 +10,9 @@ module M2Config
       save
     end
   
-    def add_route( route )
-      route.host = id
+    def check_routes
+      paths = routes.map { |route| route[:path] }
+      paths.uniq.size == paths.size
     end
 
     private
@@ -29,6 +30,5 @@ module M2Config
       s
     end
 
-  
   end
 end

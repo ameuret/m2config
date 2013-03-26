@@ -23,7 +23,6 @@ describe M2Config::Route do
       res["target_id"].should eq(@dirH.id)
       res["target_type"].should eq(@dirH.type)
     end
-    
   end
   
   describe "#host=" do
@@ -42,6 +41,32 @@ describe M2Config::Route do
       res = @db.get_first_row("SELECT * FROM route;")
       res["host_id"].should eq(host.id)
     end
-    
   end
+  
+  describe '#host' do # , {focus: true}
+    it 'returns the associated Host object'  do
+      r = M2Config::Route.new({path:"/blog", target: @dirH})
+      r.host = M2Config::Host.new({matching:"example.com", name: "ex"})
+      r.host.matching.should eq("example.com")
+    end
+  end
+
+  describe '#target=' do
+    it 'reassigns the target object' do
+      r = M2Config::Route.new({path:"/blog", target: @dirH})
+      newTarget = M2Config::Proxy.new({addr:"127.0.0.1", port: 15970})
+      r.target = newTarget
+      res = @db.get_first_row("SELECT * FROM route;")
+      res["target_id"].should eq(newTarget.id)
+      res["target_type"].should eq(newTarget.type)
+    end
+  end
+  
+  describe '#target' do
+    it 'returns the Target object' do
+      r = M2Config::Route.new({path:"/blog", target: @dirH})
+      r.target.base.should eq @dirH.base
+    end
+  end
+
 end

@@ -9,14 +9,14 @@ describe M2Config::Server do
     @db = SQLite3::Database.new DEFAULT_DB_NAME
     @db.results_as_hash = true
     @srv = M2Config::Server.new
-    @host = M2Config::Host.new({matching:"example.com", name: "ex"})
+    @host = M2Config::Host.new({matching:"example.com", name: "ex", server_id:(rand 42)})
   end
   
   after(:each) do
     @db.close if @db && !@db.closed?
   end  
 
-  describe '::new' do # , {focus: true}
+  describe '::new' do
     it 'creates a server entry with reasonable default settings' do
       res= @db.get_first_row("SELECT * FROM server;")
       res["access_log"].should eq(M2Config::Server::ACCESS_LOG)
@@ -30,6 +30,18 @@ describe M2Config::Server do
       res["use_ssl"].should eq(M2Config::Server::USE_SSL)
     end
     
+  end
+  
+  describe '::first (from Sequel::Model)' do
+    it 'returns the first server found in the database' do
+      srv = M2Config::Server.first
+      srv.id.should eq(@srv.id)
+    end
+  
+    it 'raises if there is more than one server' do
+      M2Config::Server.new
+      expect { M2Config::Server.first }.to raise_exception /Careful ! You are calling Server.first on a database holding multiple servers/
+    end
   end
   
   describe '#add_host (assigns the given host to the server)' do

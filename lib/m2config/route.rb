@@ -1,6 +1,6 @@
 module M2Config
   class Route < Sequel::Model(:route)
-    plugin :validation_helpers
+    many_to_one :host
   
     def initialize( fields )
       fields[:target_id] = fields[:target].id
@@ -15,5 +15,19 @@ module M2Config
       save
     end
   
+    def target=( newTarget )
+      self.target_id = newTarget.id
+      self.target_type = newTarget.type
+      save
+    end
+  
+    def target
+      case target_type
+      when "proxy" then Proxy[target_id]
+      when "dir" then Dir[target_id]
+      when "handler" then Handler[target_id]
+      end
+    end
+
   end
 end

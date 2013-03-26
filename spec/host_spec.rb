@@ -52,5 +52,17 @@ describe M2Config::Host do
       res = @db.get_first_row("SELECT * FROM route;")
       res["host_id"].should eq(host.id)
     end
-  end    
+  end
+  
+  describe '#check_routes' do
+    it 'returns false if some routes have identical paths'  do
+      host = M2Config::Host.new({matching:"example.com", name: "ex"})
+      dir1 = M2Config::Dir.new({base: "static/"})
+      dir2 = M2Config::Dir.new({base: "images/"})
+      host.add_route M2Config::Route.new({path:"/blog", target: dir1})
+      host.add_route M2Config::Route.new({path:"/blog", target: dir2})
+      host.check_routes.should be_false
+    end
+  end
+
 end

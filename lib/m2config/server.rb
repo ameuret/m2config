@@ -10,7 +10,6 @@ module M2Config
     PORT = 6767
     USE_SSL = 0
 
-    plugin :validation_helpers
     one_to_many :hosts
     
     def initialize( fields={} )
@@ -26,12 +25,13 @@ module M2Config
       fields[:use_ssl]      ||= USE_SSL
       super fields, false
       save
-  end
-
-    def add_host( host )
-      host.server_id = id
-      host.save
     end
-
+  
+    def self.first
+      raise "Careful ! You are calling Server.first on a database holding multiple servers" if
+        ((Server.get {count(id)}) > 1)
+      super
+    end
+    
   end
 end
