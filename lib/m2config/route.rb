@@ -9,7 +9,13 @@ module M2Config
       super(fields, false)
       save
     end
-  
+
+    def self.elect!( route66 )
+      toMatch = {path: route66.path, host_id: route66.host_id}
+      toExclude = {id: route66.id}
+      Route.where(toMatch).exclude(toExclude).delete
+    end
+
     def host=( hostOrId )
       self.host_id = hostOrId.kind_of?(Host) ? hostOrId.id : hostOrId
       save

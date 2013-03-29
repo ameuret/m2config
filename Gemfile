@@ -7,5 +7,7 @@ group :dev do
   gem 'rb-inotify'
   gem 'rspec'
   gem 'guard-rspec'
-  gem "libnotify"
+  gem 'libnotify'
+  gem 'pry'
+  gem 'pry-nav'
 end

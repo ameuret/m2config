@@ -1,6 +1,6 @@
 module M2Config
   class Host < Sequel::Model(:host)
-    one_to_many :routes
+    one_to_many :routes, {class: "M2Config::Route"}
   
     def initialize( fields )
       s = resolveServer fields
@@ -11,7 +11,13 @@ module M2Config
     end
   
     def check_routes
-      paths = routes.map { |route| route[:path] }
+      paths = routes(true).map {
+        |route|
+        route.path
+      }
+#      return true if paths.empty?
+      
+#      return "#{paths.uniq.to_s} == #{paths.to_s}"
       paths.uniq.size == paths.size
     end
 
