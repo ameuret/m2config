@@ -5,7 +5,7 @@ include M2Config
 cfg       = M2Config::Config.new
 server    = M2Config::Server.new
 exComHost = M2Config::Host.new({matching:"example.com", name:"ex"})
-pubDir    = M2Config::Dir.new({base:"public/"})
+pubDir    = M2Config::Dir.new({base:"public/",default_ctype: "text/html"})
 pubRoute  = M2Config::Route.new( {path:"/", target:pubDir} )
 appHand   = M2Config::Handler.new({ send_spec:"tcp://10.0.0.1:8989",
                                     recv_spec:"tcp://10.0.0.1:9898",

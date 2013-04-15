@@ -28,8 +28,9 @@ module M2Config
       creating = ! (File.exists? @fileName)
       @db = Sequel.connect "sqlite://#{@fileName}"
       
-      @db.run SCHEMA if creating
 
+      @db.run SCHEMA if creating
+ 
       Sequel::Model.db = @db
   
       require "m2config/server"
@@ -39,6 +40,9 @@ module M2Config
       require "m2config/proxy"
       require "m2config/handler"
       require "m2config/setting"
+      require "m2config/mimetype"
+
+      M2Config::MimeType.populate_table if creating
     end
     
     def add_server( settings = {} )
