@@ -22,8 +22,8 @@ describe M2Config do
     end
   
     it 'populates the MIME table with a nice set of mappings' do
-      M2Config::MimeType[extension:"html"].mimetype.should eq("text/html")
-      M2Config::MimeType[extension:"css"].mimetype.should eq("text/css")
+      M2Config::MimeType[extension:".html"].mimetype.should eq("text/html")
+      M2Config::MimeType[extension:".css"].mimetype.should eq("text/css")
     end
   end
   
