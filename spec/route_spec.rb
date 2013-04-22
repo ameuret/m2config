@@ -18,13 +18,29 @@ describe M2Config::Route do
       host = M2Config::Host.new({name:"main",matching:"actime.biz"})
       dirH = M2Config::Dir.new({base: "static/"})
       dir2 = M2Config::Dir.new({base: "ManceRayder/"})
-      r1 = M2Config::Route.new({path:"/king", target: dirH})
-      r2 = M2Config::Route.new({path:"/king", target: dir2})
-      r3 = M2Config::Route.new({path:"/king", target: dirH})
+      r1 = M2Config::Route.new({path:"/king", target: dirH, host: host})
+      r2 = M2Config::Route.new({path:"/king", target: dir2, host: host})
+      r3 = M2Config::Route.new({path:"/king", target: dirH, host: host})
       M2Config::Route.elect!(r2)
       host.check_routes.should be_true
       king = M2Config::Route.where(path: "/king").first
       king.target.base.should eq("ManceRayder/")
+    end
+
+    it "leaves routes belonging to a different host untouched" do
+      host = M2Config::Host.new({name:"main",matching:"actime.biz"})
+      host2 = M2Config::Host.new({name:"secondary",matching:"nameforge.net"})
+      dirH = M2Config::Dir.new({base: "static/"})
+      dir2 = M2Config::Dir.new({base: "ManceRayder/"})
+      r1 = M2Config::Route.new({path:"/king", target: dirH, host: host})
+      r2 = M2Config::Route.new({path:"/king", target: dir2, host: host})
+      r3 = M2Config::Route.new({path:"/king", target: dirH, host: host2})
+      M2Config::Route.elect!(r2)
+      host.check_routes.should be_true
+      king = M2Config::Route.where(path: "/king").first
+      king.target.base.should eq("ManceRayder/")
+      onOtherHost = M2Config::Route.where(path:"/king", target_id: dirH.id, host: host2).first
+      onOtherHost.should_not be_nil 
     end
   end
   
