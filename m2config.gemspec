@@ -18,7 +18,7 @@ Gem::Specification.new do |spec|
   spec.require_paths = ["lib"]
 
   spec.add_dependency "sqlite3"
-  spec.add_dependency "sequel"
+  spec.add_dependency "sequel", '~> 3'
   spec.add_dependency "uuid"
   spec.add_dependency "mime-types"
   
