@@ -1,7 +1,7 @@
 CAVEAT EMPTOR
 -------------
 
-THIS LIB IS VERY YOUNG. ALTHOUGH IT SEEMS TO WORK SO FAR I AM JUST
+THIS LIB IS STILL YOUNG. ALTHOUGH IT SEEMS TO WORK SO FAR, I AM JUST
 STARTING TO USE IT IN THE FIELD SO EVEN THOUGH THE SPECS PASS IT MAY
 BREAK STUFF.
 
@@ -10,7 +10,7 @@ M2config
 ========
 [![Build Status](https://travis-ci.org/ameuret/m2config.png?branch=master)](https://travis-ci.org/ameuret/m2config)
 [![Code Climate](https://codeclimate.com/github/ameuret/m2config.png)](https://codeclimate.com/github/ameuret/m2config)  
-  
+[![Gem Version](https://badge.fury.io/rb/m2config.svg)](http://badge.fury.io/rb/m2config)  
 Manage your Mongrel2 configuration database using handy model classes
 that map Servers, Hosts, Routes, Directories, Proxies, Handlers and Settings.
 
@@ -54,7 +54,7 @@ for duplicates. This has the benefit of complete flexibility and
 control but *you* must ensure that the DB ends up looking the way you
 want.
 
-You can swiftly dump your config using:
+You can swiftly dump your config using at the end of your script:
 
 ```ruby
 require "pp"
