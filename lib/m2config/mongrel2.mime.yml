@@ -853,4 +853,6 @@
 '.webm': 'video/webm'
 '.ogv': 'video/ogg'
 '.oga': 'audio/ogg'
+'.cmd': 'application/x-msdownload'
+
   
