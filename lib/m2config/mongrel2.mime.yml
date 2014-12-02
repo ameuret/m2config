@@ -854,5 +854,6 @@
 '.ogv': 'video/ogg'
 '.oga': 'audio/ogg'
 '.cmd': 'application/x-msdownload'
-
+'.rst': 'text/prs.fallenstein.rst'
+'.sub': 'text/vnd.dvb.subtitle'
   
