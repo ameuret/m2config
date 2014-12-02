@@ -13,10 +13,11 @@ module M2Config
                              having count(*)>1
                              SQL
   
-    def self.populate_table
+    def self.populate_table(types=nil, ignoreDoubles=false)
       raise RuntimeError, "Table must be empty" if db[:mimetype].count > 0
-      rows = []
-      MIME::Types.each {
+      types ||= MIME::Types
+      rows = [] # Will collect ext<->type rows
+      types.each {
         |type|
         next if not_dominant?(type)
         type.extensions.each {
@@ -30,7 +31,7 @@ module M2Config
       db.transaction {
         db[:mimetype].import([:mimetype, :extension], rows)
       }
-      remove_duplicates
+      remove_duplicates unless ignoreDoubles
     end
   
     # Is it reasonable to ignore this type ?
@@ -38,15 +39,16 @@ module M2Config
       mtype.obsolete? || superceded?(mtype)  || !simplest?(mtype)
     end
 
-    def self.superceded?( mtype )
+    def self.superceded?(mtype)
       mtype.docs =~ /instead/
     end
-  
 
     def self.simplest?(mtype)
       mtype.content_type == mtype.simplified
     end
+  
     def self.remove_duplicates
+      randomChoices = []
       db[SQL_FIND_DUPLICATES].all.each {
         |r|
         ext = r[:extension]
@@ -55,14 +57,14 @@ module M2Config
           db[:mimetype].where(extension:ext).delete
           db[:mimetype].insert(extension:ext, mimetype:preferred)
         else
-          raise ArgumentError, "#{ext} has multiple content types but no Mongrel2 preference"
+          raise ArgumentError, "#{ext} (#{r[:mimetype]}) has multiple content types but no Mongrel2 preference"
         end
       }
       raise RuntimeError, "Still duplicates after removing duplicates!" if
         db[SQL_FIND_DUPLICATES].all.size > 0
     end
     
-    def initialize( fields )
+    def initialize(fields)
       raise ArgumentError, "Extension must start with a ." unless fields[:extension] =~ /^\./
       type = M2Config::MimeType[extension:fields[:extension]]
       raise ArgumentError, "extension #{fields[:extension]} is already covered by #{type.mimetype} type" if type

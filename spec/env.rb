@@ -11,7 +11,7 @@ EXISTING_DB_NAME = "empty.sqlite"
 
 RSpec.configure do |config|
   File.delete DEFAULT_DB_NAME rescue nil
-  CFG = M2Config::Config.new
+  CFG = M2Config::Config.new(DEFAULT_DB_NAME,{ignoreDoubles:true})
   config.around(:each) do |example|
     CFG.db.transaction do
       example.call

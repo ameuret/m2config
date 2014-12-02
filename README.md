@@ -40,8 +40,8 @@ require "m2config"
 
 cfg       = M2Config::Config.new
 server    = M2Config::Server.new
-exComHost = M2Config::Host.new({matching:"example.com"})
-pubDir    = M2Config::Dir.new({base:"/public"})
+exComHost = M2Config::Host.new({name: "ex", matching:"example.com"})
+pubDir    = M2Config::Dir.new({base:"public"})
 pubRoute  = M2Config::Route.new({path:"/", target:pubDir})
 
 exComHost.add_route pubRoute
@@ -54,7 +54,7 @@ for duplicates. This has the benefit of complete flexibility and
 control but *you* must ensure that the DB ends up looking the way you
 want.
 
-You can swiftly dump your config using at the end of your script:
+You can swiftly dump your config using this at the end of your script:
 
 ```ruby
 require "pp"
@@ -66,6 +66,10 @@ pp Dir.all
 pp Route.all
 
 ```
+
+#### Default values
+
+TODO
 
 ### This is Sequel
 

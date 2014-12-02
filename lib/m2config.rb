@@ -23,12 +23,11 @@ module M2Config
       @@foundTables
     end
     
-    def initialize( fileName = DEFAULT_CONFIG )
+    def initialize(fileName = DEFAULT_CONFIG, options={})
       @fileName = fileName
       creating = ! (File.exists? @fileName)
       @db = Sequel.connect "sqlite://#{@fileName}"
       
-
       @db.run SCHEMA if creating
  
       Sequel::Model.db = @db
@@ -42,7 +41,7 @@ module M2Config
       require "m2config/setting"
       require "m2config/mimetype"
 
-      M2Config::MimeType.populate_table if creating
+      M2Config::MimeType.populate_table(nil,options[:ignoreDoubles]) if creating
     end
     
     def add_server( settings = {} )
