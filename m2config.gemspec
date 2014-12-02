@@ -20,7 +20,7 @@ Gem::Specification.new do |spec|
   spec.add_dependency "sqlite3"
   spec.add_dependency "sequel", '~> 3'
   spec.add_dependency "uuid"
-  spec.add_dependency "mime-types"
+  spec.add_dependency "mime-types", '2.4.3'
   
   spec.add_development_dependency "bundler", "~> 1.3"
   spec.add_development_dependency "rake"
