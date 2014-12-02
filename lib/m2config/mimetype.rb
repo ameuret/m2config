@@ -18,7 +18,7 @@ module M2Config
       rows = []
       MIME::Types.each {
         |type|
-        next if not_dominant(type)
+        next if not_dominant?(type)
         type.extensions.each {
           |ext|
           ext = "."+ext
@@ -33,14 +33,19 @@ module M2Config
       remove_duplicates
     end
   
-    def self.not_dominant( mtype )
-      mtype.obsolete? || superceded?(mtype)
+    # Is it reasonable to ignore this type ?
+    def self.not_dominant?(mtype)
+      mtype.obsolete? || superceded?(mtype)  || !simplest?(mtype)
     end
 
     def self.superceded?( mtype )
       mtype.docs =~ /instead/
     end
   
+
+    def self.simplest?(mtype)
+      mtype.content_type == mtype.simplified
+    end
     def self.remove_duplicates
       db[SQL_FIND_DUPLICATES].all.each {
         |r|
