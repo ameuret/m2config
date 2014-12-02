@@ -5,7 +5,7 @@ gemspec
 group :dev do
   gem 'guard'
   gem 'rb-inotify'
-  gem 'rspec'
+  gem 'rspec', '~> 2.13'
   gem 'guard-rspec'
   gem 'libnotify'
   gem 'pry'
