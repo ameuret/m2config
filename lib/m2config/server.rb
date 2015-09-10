@@ -3,6 +3,7 @@ module M2Config
     ACCESS_LOG = '/logs/access.log'
     ERROR_LOG = '/logs/error.log'
     PID_FILE = '/run/mongrel2.pid'
+    CONTROL_PORT = ''
     CHROOT = './'
     DEFAULT_HOST = 'localhost'
     NAME = 'main'

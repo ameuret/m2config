@@ -12,6 +12,7 @@ describe M2Config::Server do
       res[:access_log].should eq(M2Config::Server::ACCESS_LOG)
       res[:error_log].should eq(M2Config::Server::ERROR_LOG)
       res[:pid_file].should eq(M2Config::Server::PID_FILE)
+      res[:control_port].should eq(M2Config::Server::CONTROL_PORT)
       res[:chroot].should eq(M2Config::Server::CHROOT)
       res[:default_host].should eq(M2Config::Server::DEFAULT_HOST)
       res[:name].should eq(M2Config::Server::NAME)
