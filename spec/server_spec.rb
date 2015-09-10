@@ -15,7 +15,6 @@ describe M2Config::Server do
       res[:control_port].should eq(M2Config::Server::CONTROL_PORT)
       res[:chroot].should eq(M2Config::Server::CHROOT)
       res[:default_host].should eq(M2Config::Server::DEFAULT_HOST)
-      res[:name].should eq(M2Config::Server::NAME)
       res[:bind_addr].should eq(M2Config::Server::BIND_ADDR)
       res[:port].should eq(M2Config::Server::PORT)
       res[:use_ssl].should eq(M2Config::Server::USE_SSL)

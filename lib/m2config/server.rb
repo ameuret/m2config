@@ -6,7 +6,6 @@ module M2Config
     CONTROL_PORT = ''
     CHROOT = './'
     DEFAULT_HOST = 'localhost'
-    NAME = 'main'
     BIND_ADDR = '0.0.0.0'
     PORT = 6767
     USE_SSL = 0
@@ -20,7 +19,6 @@ module M2Config
       fields[:pid_file]     ||= PID_FILE
       fields[:chroot]       ||= CHROOT
       fields[:default_host] ||= DEFAULT_HOST
-      fields[:name]         ||= NAME
       fields[:bind_addr]    ||= BIND_ADDR
       fields[:port]         ||= PORT
       fields[:use_ssl]      ||= USE_SSL
