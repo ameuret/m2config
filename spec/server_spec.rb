@@ -9,16 +9,16 @@ describe M2Config::Server do
   describe '::new' do
     it 'creates a server entry with reasonable default settings' do
       res = CFG.db[:server].first
-      res[:access_log].should eq(M2Config::Server::ACCESS_LOG)
-      res[:error_log].should eq(M2Config::Server::ERROR_LOG)
-      res[:pid_file].should eq(M2Config::Server::PID_FILE)
-      res[:control_port].should eq(M2Config::Server::CONTROL_PORT)
-      res[:chroot].should eq(M2Config::Server::CHROOT)
-      res[:default_host].should eq(M2Config::Server::DEFAULT_HOST)
-      res[:name].should eq(M2Config::Server::NAME)
-      res[:bind_addr].should eq(M2Config::Server::BIND_ADDR)
-      res[:port].should eq(M2Config::Server::PORT)
-      res[:use_ssl].should eq(M2Config::Server::USE_SSL)
+      expect(res[:access_log]).to eq(M2Config::Server::ACCESS_LOG)
+      expect(res[:error_log]).to eq(M2Config::Server::ERROR_LOG)
+      expect(res[:pid_file]).to eq(M2Config::Server::PID_FILE)
+      expect(res[:control_port]).to eq(M2Config::Server::CONTROL_PORT)
+      expect(res[:chroot]).to eq(M2Config::Server::CHROOT)
+      expect(res[:default_host]).to eq(M2Config::Server::DEFAULT_HOST)
+      expect(res[:name]).to eq(M2Config::Server::NAME)
+      expect(res[:bind_addr]).to eq(M2Config::Server::BIND_ADDR)
+      expect(res[:port]).to eq(M2Config::Server::PORT)
+      expect(res[:use_ssl]).to eq(M2Config::Server::USE_SSL)
     end
     
   end
@@ -26,7 +26,7 @@ describe M2Config::Server do
   describe '::first (from Sequel::Model)' do
     it 'returns the first server found in the database' do
       srv = M2Config::Server.first
-      srv.id.should eq(@srv.id)
+      expect(srv.id).to eq(@srv.id)
     end
   
     it 'raises if there is more than one server' do
@@ -39,7 +39,7 @@ describe M2Config::Server do
     it 'accepts an existing Host instance' do
       @srv.add_host @host
       res = CFG.db[:host].where(id: @host.id).first
-      res[:server_id].should eq(@srv.id)
+      expect(res[:server_id]).to eq(@srv.id)
     end
   end
 end

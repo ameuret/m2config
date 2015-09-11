@@ -6,12 +6,12 @@ describe M2Config do
   
   describe "::new" do
     it 'creates a default database when name absent' do
-      File.should exist DEFAULT_DB_NAME
+      expect(File).to exist DEFAULT_DB_NAME
     end
   
     it 'learns the DB schema from the official schema dump' do
       for table in TABLES do
-        M2Config::Config.tables.should include table
+        expect(M2Config::Config.tables).to include table
       end
     end
   
@@ -22,15 +22,15 @@ describe M2Config do
     end
   
     it 'populates the MIME table with a nice set of mappings' do
-      M2Config::MimeType[extension:".html"].mimetype.should eq("text/html")
-      M2Config::MimeType[extension:".css"].mimetype.should eq("text/css")
+      expect(M2Config::MimeType[extension:".html"].mimetype).to eq("text/html")
+      expect(M2Config::MimeType[extension:".css"].mimetype).to eq("text/css")
     end
   end
   
   describe '#[]=' do
     it 'creates or modifies the value of a setting' do
       CFG["zeromq.threads"] = 8
-      CFG.db[:setting].where(key:"zeromq.threads").first[:value].should eq("8")
+      expect(CFG.db[:setting].where(key:"zeromq.threads").first[:value]).to eq("8")
     end
   end
 

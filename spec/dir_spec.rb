@@ -5,17 +5,17 @@ describe M2Config::Dir do
   describe "::new" do
     it "needs to know the base path to handle" do
       M2Config::Dir.new({base:"images/"})
-      CFG.db[:directory].first[:base].should eq("images/")
+      expect(CFG.db[:directory].first[:base]).to eq("images/")
     end
     
     it "defaults to application/octet-stream for the default content type" do
       M2Config::Dir.new({base:"images/"})
-      CFG.db[:directory].first[:default_ctype].should eq("application/octet-stream")
+      expect(CFG.db[:directory].first[:default_ctype]).to eq("application/octet-stream")
     end
     
     it "defaults to index.html for the index file" do
       dir = M2Config::Dir.new({base:"/"})
-      CFG.db[:directory].first[:index_file].should eq("index.html")
+      expect(CFG.db[:directory].first[:index_file]).to eq("index.html")
     end
   
     describe "helps you spot common mistakes" do
@@ -40,7 +40,7 @@ describe M2Config::Dir do
   
   describe '#type' do
     it 'returns its type' do
-      M2Config::Dir.new({base:"/"}).type.should eq("dir")
+      expect(M2Config::Dir.new({base:"/"}).type).to eq("dir")
     end
   end
 

@@ -8,14 +8,14 @@ describe M2Config::Proxy do
     it "needs an address and a port number" do
       M2Config::Proxy.new({addr:"legacy.local", port: 8080})
       res = CFG.db[:proxy].first
-      res[:addr].should eq("legacy.local")
-      res[:port].should eq(8080)
+      expect(res[:addr]).to eq("legacy.local")
+      expect(res[:port]).to eq(8080)
     end
   end
   
   describe '#type' do
     it 'returns its type' do
-      M2Config::Proxy.new({addr:"legacy.local", port: 8080}).type.should eq("proxy")
+      expect(M2Config::Proxy.new({addr:"legacy.local", port: 8080}).type).to eq("proxy")
     end
   end
   

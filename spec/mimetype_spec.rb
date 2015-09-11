@@ -16,7 +16,7 @@ describe M2Config::MimeType do
     end
   
     it 'allows you to force the redefinition of an existing extension' do
-      pending
+      skip
       fail
     end
   end
@@ -27,7 +27,7 @@ describe M2Config::MimeType do
       CFG.db[:mimetype].delete
       M2Config::MimeType.populate_table()
 #      M2Config::MimeType.populate_table(nil,ignoreDoubles=true)
-      M2Config::MimeType[extension:'.css'].mimetype.should eq('text/css')
+      expect(M2Config::MimeType[extension:'.css'].mimetype).to eq('text/css')
     end
   
     it 'checks for doubles unless asked not to' do
@@ -44,8 +44,8 @@ describe M2Config::MimeType do
     it 'accepts an array of MIME::Types if the whole list is too much' do
       CFG.db[:mimetype].delete
       M2Config::MimeType.populate_table [MIME::Type.new(['text/plain', 'zed'])]
-      M2Config::MimeType[extension:'.zed'].mimetype.should eq('text/plain')
-      M2Config::MimeType[extension:'.css'].should eq(nil)
+      expect(M2Config::MimeType[extension:'.zed'].mimetype).to eq('text/plain')
+      expect(M2Config::MimeType[extension:'.css']).to eq(nil)
     end
   
     it 'frowns when asked to populate a non-empty table' do
