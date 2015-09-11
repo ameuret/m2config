@@ -24,6 +24,7 @@ module M2Config
       fields[:bind_addr]    ||= BIND_ADDR
       fields[:port]         ||= PORT
       fields[:use_ssl]      ||= USE_SSL
+      fields[:control_port] ||= CONTROL_PORT
       super fields, false
       save
     end

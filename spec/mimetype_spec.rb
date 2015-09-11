@@ -17,6 +17,7 @@ describe M2Config::MimeType do
   
     it 'allows you to force the redefinition of an existing extension' do
       pending
+      fail
     end
   end
   

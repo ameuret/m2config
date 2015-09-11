@@ -51,7 +51,7 @@ describe M2Config::Host do
       dir2 = M2Config::Dir.new({base: "images/"})
       host.add_route M2Config::Route.new({path:"/blog1", target: dir1})
       host.add_route M2Config::Route.new({path:"/blog1", target: dir2})
-      host.check_routes.should be_false
+      host.check_routes.should be_falsey
     end
 
     it 'returns true if all routes have different paths'  do
@@ -62,12 +62,12 @@ describe M2Config::Host do
       r2 = M2Config::Route.new({path:"/images", target: dir2})
       host.add_route r1
       host.add_route r2
-      host.check_routes.should be_true
+      host.check_routes.should be_truthy
     end
 
     it 'withstands the idea of not having any routes'  do # , {focus: true}
       host = M2Config::Host.new({matching:"example.com", name: "ex"})
-      host.check_routes.should be_true
+      host.check_routes.should be_truthy
     end
   end
 
